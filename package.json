@@ -1,0 +1,54 @@
+{
+  "name": "@prebuilder/rollup",
+  "version": "1.0.0",
+  "description": "A rollup wrapper that allows for C#-like directives",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rollup -c rollup.config.mjs",
+    "dev": "rollup -w -c rollup.config.mjs",
+    "tests": "npm run tests-np && npm run tests-tsp",
+    "tests-np": "npm run test-np && npm run test-np-ots",
+    "tests-tsp": "npm run test-tsp && npm run test-tsp-ots",
+    "test-np": "node dist/index.js -c tests/no-plugin/rollup.config.mjs -pbc tests/no-plugin/prebuilder.config.js",
+    "test-np-ots": "node dist/index.js -c tests/no-plugin/rollup.config.mjs -pbc tests/no-plugin/prebuilder.onthespot.config.js",
+    "test-np-watch": "npm run test-np -- -w",
+    "test-tsp": "node dist/index.js -c tests/typescript-plugin/rollup.config.mjs -pbc tests/typescript-plugin/prebuilder.config.js",
+    "test-tsp-ots": "node dist/index.js -c tests/typescript-plugin/rollup.config.mjs -pbc tests/typescript-plugin/prebuilder.onthespot.config.js",
+    "test-tsp-watch": "npm run test-tsp -- -w"
+  },
+  "bin": {
+    "pb-rollup": "dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prebuilderjs/rollup.git"
+  },
+  "keywords": [
+    "typescript",
+    "rollup",
+    "prebuilder",
+    "prebuilderjs",
+    "prebuild",
+    "node",
+    "preprocessor",
+    "preprocess",
+    "directives",
+    "defines",
+    "build"
+  ],
+  "author": "ANFADEV",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/prebuilderjs/rollup/issues"
+  },
+  "homepage": "https://github.com/prebuilderjs/rollup#readme",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-typescript": "^9.0.2",
+    "tslib": "^2.4.1"
+  },
+  "dependencies": {
+    "prebuilder": "^1.3.6",
+    "rollup": "^3.0.0"
+  }
+}
