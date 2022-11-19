@@ -2,7 +2,7 @@
     <a href="https://prebuilder.anfadev.com/"><img width=80 src="https://prebuilder.anfadev.com/images/prebuilder-logo.svg"></img></a>
 </p>
 
-<h1 style="text-align:center" align="center">Prebuilder (rollup helper)</h1>
+<h1 style="text-align:center" align="center">Prebuilder (Rollup helper)</h1>
 
 <p style="text-align:center" align="center">
     <a href="https://www.npmjs.com/package/@prebuilder/rollup" alt="Npm version">
@@ -22,7 +22,7 @@ A pre-processor that brings C#-like directives to your project, supporting<br><s
 <br><br>
 <p style="text-align:center" align="center">
 This helper brings two improvements:<br>
-✔ Watch mode support for rollup.<br>
+✔ Watch mode support for Rollup.<br>
 ✔ Simple & clean way of use.
 </p>
 
@@ -39,21 +39,6 @@ npm i --save-dev @prebuilder/rollup
 ---
 
 ## Usage
-
-Instead of using prebuilder's start to bundle your rollup project like this:
-```sh
-prebuild start "npx rollup" --dir "src"
-```
-
-With this package it's possible to run prebuilder & rollup, like this:
-```sh
-pb-rollup
-```
-
-This way `pb-rollup` can fully replace the `rollup` command, while retaining all parameters passed with it
-Prebuilder will use the prebuilder.config.js file in the root of the project.
-
-This helper also brings watch mode support for rollup.
 
 ### In your cli:
 <table>
@@ -127,6 +112,25 @@ This helper basically runs Prebuilder wrap with Rollup and:
 - Checks if watch mode is enabled for rollup, and applies it to Prebuilder too
 - In watch mode: makes prebuilder watch the source, and Rollup watch the output of Prebuilder
 
+## Current limitations
+- The scripts in source folder must not import from outside it using a relative path (`../`), meaning:
+    ```js
+    import ** from "react"                      // ✔ an npm package
+
+    path = require(path)                        // ✔ a node.js library
+    import path from "path"
+
+    import ** from "/folder/script.js"          // ✔ from an absolute path
+    import ** from "C:/folder/script.js"    
+
+    import ** from "https://site.net/script.js" // ✔ from an url
+
+    import ** from "./script.js"                // ✔ from relative path inside src folder
+
+    import ** from "../../../script.js"         // ❌ from relative path outside src folder
+    ```
+    A solution is currently planned..
+
 ## Licence
 
-[MIT](https://github.com/prebuilderjs/prebuilder/blob/main/README.md)
+[MIT](https://github.com/prebuilderjs/rollup/blob/main/README.md)

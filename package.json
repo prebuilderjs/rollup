@@ -1,6 +1,6 @@
 {
   "name": "@prebuilder/rollup",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A rollup wrapper that allows for C#-like directives",
   "main": "dist/index.js",
   "scripts": {
