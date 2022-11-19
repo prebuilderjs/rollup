@@ -21,7 +21,7 @@
 A pre-processor that brings C#-like directives to your project, supporting<br><span style="color: #a59b28; font-weight:bold">Javascript</span>, <span style="color: #126f9b; font-weight:bold">Typescript</span>, <span style="color: #b3690f; font-weight:bold">Rust</span>, <span style="color: #969762; font-weight:bold">Python</span> & any other text-based file!
 <br><br>
 <p style="text-align:center" align="center">
-This helper brings two improvements:<br>
+This helper streamlines your workflow when using rollup, & brings two main improvements:<br>
 ✔ Watch mode support for Rollup.<br>
 ✔ Simple & clean way of use.
 </p>
@@ -40,7 +40,7 @@ npm i --save-dev @prebuilder/rollup
 
 ## Usage
 
-### In your cli:
+### 1) Command line:
 <table>
     <tr>
         <th>Use</th>
@@ -64,7 +64,7 @@ rollup
     </tr>
 </table>
 
-### Adding Rollup parameters:
+### 2) Adding Rollup parameters:
 <table>
     <tr>
         <th>Before</th>
@@ -88,7 +88,60 @@ pb-rollup -w -c myrollup.config.mjs
     </tr>
 </table>
 
-### Adding Prebuilder parameters:
+Then update the rollup config file of your project, to use prebuilder:
+
+<table>
+    <tr>
+        <th>Rollup config file</th>
+        <th>Prebuilder config file</th>
+    </tr>
+    <tr>
+<td>
+
+```js
+// let prebuilder set the path
+let src = process.env.__prebuilderOutput;
+
+export default {
+
+   // remove "src"
+   //input: "src/index.js", 
+
+   // add prebuilder output like this  
+   input: src + "/index.js",
+
+   output: {
+       file: "dist/index.js",
+   },
+}
+```
+<!-- these need to no be indented -->
+</td>
+<td>
+
+```js
+
+module.exports = {
+    srcDir: 'src',
+    log: false,
+    preprocessOptions: {
+        defines: [
+            "MY_DIRECTIVE"
+        ],
+        mode: "both"
+    }
+}
+
+
+
+
+```
+
+</td>
+    </tr>
+</table>
+
+### 3) Adding Prebuilder parameters:
 Put prebuilder parameters in a prebuilder config file (to avoid conflict with rollup's parameters)
 and set it as follows:
 ```sh
@@ -104,13 +157,13 @@ The differences between this rollup helper, and [`@prebuilder/rollup-plugin`](ht
 | faster processing                           | ❌<br>manages files +<br>processes them | ✔ <br>processes files |
 | Not affected by configuration<br>edge cases | ✔  | ❌<br>can become unusable for<br> complex rollup configs,<br> depending on what other<br> plugin is used ¹ |
 
-¹ ) If, for example, using the typsescript rollup plugin which seems to manage .ts files on non-transform hooks, this wrapper is then more suitable.
+¹ &nbsp; If, for example, using the typsescript rollup plugin which seems to manage .ts files on non-transform hooks, this wrapper is then more suitable.
 
 ## How it works
 
 This helper basically runs Prebuilder wrap with Rollup and:
-- Checks if watch mode is enabled for rollup, and applies it to Prebuilder too
-- In watch mode: makes prebuilder watch the source, and Rollup watch the output of Prebuilder
+- Checks if watch mode is enabled for rollup, and applies it to Prebuilder.
+- Makes Prebuilder watch the source, and Rollup watch the output of Prebuilder, when in watch mode.
 
 ## Current limitations
 - The scripts in source folder must not import from outside it using a relative path (`../`), meaning:
@@ -129,7 +182,6 @@ This helper basically runs Prebuilder wrap with Rollup and:
 
     import ** from "../../../script.js"         // ❌ from relative path outside src folder
     ```
-    A solution is currently planned..
 
 ## Licence
 
