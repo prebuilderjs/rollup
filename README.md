@@ -162,7 +162,8 @@ The differences between this rollup helper, and [`@prebuilder/rollup-plugin`](ht
 ## How it works
 
 This helper basically runs Prebuilder wrap with Rollup and:
-- Checks if watch mode is enabled for rollup, and applies it to Prebuilder.
+- Lets Prebuilder control when and how to run rollup command
+- Checks if watch mode is enabled for Rollup, and applies it to Prebuilder.
 - Makes Prebuilder watch the source, and Rollup watch the output of Prebuilder, when in watch mode.
 
 ## Current limitations
